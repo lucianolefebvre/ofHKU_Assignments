@@ -19,17 +19,62 @@ void ofApp::setup(){
     hasLostGame = false;
     score = 0;
     ofSetVerticalSync(true);
-    enemySpeed = 50;
+    enemySpeed = 5;
       font.loadFont("SourceSansPro-Bold.ttf", 20);
  sound.loadSound("russiaSong.mp3");
-      sound.play();
-  
+    sound.play();
+
+    
+    //make the connection. Remember you need to replace the string here with your actual port.
+    // 57600 is the baud speed.
+    myArduino.connect("/dev/tty.usbmodem1411", 57600);
+    
+    //a test to see if the arduion has been set up yet?
+    bSetupArduino= false;
+
+}
+
+void ofApp::updateArduino(){
+    //a call to update the arduion data ins and out
+    myArduino.update();
+}
+
+
+//this will set up all of my arduio pins
+
+void ofApp::setupArduino(){
+    //this you can use ARD_OUTPUT but also ARD_INPUT to receive data! :)
+    myArduino.sendDigitalPinMode(9, ARD_OUTPUT);
+    
+    
 }
 
 //--------------------------------------------------------------
 //update is all the math stuff
 // runs ones per frame before draw
 void ofApp::update(){
+    
+    //if my arduio is ready
+    if ( myArduino.isArduinoReady()){
+        
+        // 1st: setup the arduino if haven't already:
+        if (bSetupArduino == false){
+            
+            // how to read in and out to the console.
+            //            cout << "arduino running" << endl;
+            //            cout << "what should the score be?" << endl;
+            //            cin >> score;
+            //            cout << "you set the score to " << score << endl;
+            
+            //this fundtion assigns the pins
+            setupArduino();
+            // we've starting running arduino so no need to call setup again! :)
+            bSetupArduino = true;	// only do this once
+        }
+        
+        // 2nd do the update of the arduino
+        updateArduino();
+    }
   
 //     xpos += speed;
 //     ypos += speed;
@@ -49,7 +94,7 @@ void ofApp::update(){
         }
     }
     
-    
+ 
 
 }
 
@@ -92,8 +137,15 @@ void ofApp::draw(){
     {
         font.drawString("\nThis game is to much for you!!, thats OK. Just press any key to resart", 120,40);
      
+        //turn off the LED  light by setting the 9th pin to ARD_LOW
         
+        myArduino.sendDigital(9, ARD_HIGH);
+    } else {
+            myArduino.sendDigital(9, ARD_LOW);
+       
     }
+ 
+    
 
 }
 
@@ -119,7 +171,8 @@ void ofApp::keyReleased(int key){
         enemyY = 0 - enemyRadius;
         hasLostGame = false;
         score = 0;
-    
+            myArduino.sendDigital(9, ARD_HIGH);
+        
     }
   
 }

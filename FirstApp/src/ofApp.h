@@ -45,7 +45,16 @@ class ofApp : public ofBaseApp{
 //Sound stuff
     ofSoundPlayer sound;
 
-   
- 
+    //variables for Arduino
+    
+    //allows for serial output -- we'll do this next week. :)
+    ofSerial serial;
+    //an arduino object
+    ofArduino myArduino;
+    //this variable will only be false when the code first runs arduino
+    bool bSetupArduino;
+    ///fucntions for arduino
+    void setupArduino();
+    void updateArduino();
 		
 };

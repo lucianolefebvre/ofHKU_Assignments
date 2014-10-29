@@ -19,19 +19,22 @@ void ofApp::setup(){
     hasLostGame = false;
     score = 0;
     ofSetVerticalSync(true);
-    enemySpeed = 10;
-   
-
+    enemySpeed = 50;
+      font.loadFont("SourceSansPro-Bold.ttf", 20);
+ sound.loadSound("russiaSong.mp3");
+      sound.play();
+  
 }
 
 //--------------------------------------------------------------
 //update is all the math stuff
 // runs ones per frame before draw
 void ofApp::update(){
+  
 //     xpos += speed;
 //     ypos += speed;
     //trubblemaker
-    enemyRadius ++;
+//    enemyRadius ++;
     if(hasLostGame == false){
         if(enemyY > ofGetHeight()+enemyRadius)
         {
@@ -45,6 +48,9 @@ void ofApp::update(){
             hasLostGame = true;
         }
     }
+    
+    
+
 }
 
 //--------------------------------------------------------------
@@ -60,21 +66,35 @@ void ofApp::draw(){
 //    }
     ofBackground(0, 0, 0);
     //this creates the enemy
-    ofSetColor(255,0,0);
-    ofCircle(enemyX,enemyY,enemyRadius);
+//    ofSetColor(255,0,0);
+//    ofCircle(enemyX,enemyY,enemyRadius);
     
+    //creates eagle => player
+    image.loadImage("eagle.png");
+    image.draw(mouseX-100, mouseY-100);
+
+    
+    //putin instead of cirle
+    image.loadImage("putin.png");
+    image.draw(enemyX-100, enemyY-143);
+
     //this creates the player
-    ofSetColor(255, 255, 255);
-    ofCircle(mouseX,mouseY,playerRadius);
+//    ofSetColor(255, 255, 255);
+//    ofCircle(mouseX,mouseY,playerRadius);
+
+ 
+    //font load
+
     
     ofSetColor(255, 255, 255);
-    ofDrawBitmapString("Score "+ ofToString(score), 120,40);
+    font.drawString("Score "+ ofToString(score), 120,40);
     if(hasLostGame)
     {
-        ofDrawBitmapString("\nThis game is to much for you!!, thats OK. Just press any key to resart", 120,40);
+        font.drawString("\nThis game is to much for you!!, thats OK. Just press any key to resart", 120,40);
+     
         
     }
-    
+
 }
 
 //--------------------------------------------------------------
@@ -85,7 +105,7 @@ void ofApp::keyPressed(int key){
 //    // visible is a boolean in ofApp.h made by terwany.
     enemyX = ofRandom(ofGetWidth());
     enemySpeed += 0.02;
-    
+
 }
 
 //--------------------------------------------------------------
@@ -99,6 +119,7 @@ void ofApp::keyReleased(int key){
         enemyY = 0 - enemyRadius;
         hasLostGame = false;
         score = 0;
+    
     }
   
 }

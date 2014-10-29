@@ -36,5 +36,16 @@ class ofApp : public ofBaseApp{
         int enemySpeed;
         bool hasLostGame;
     
+//image thingy
+    ofImage image;
+    
+//font madness
+    ofTrueTypeFont font;
+ 
+//Sound stuff
+    ofSoundPlayer sound;
+
+   
+ 
 		
 };

@@ -39,6 +39,7 @@ class ofApp : public ofBaseApp{
 //image thingy
     ofImage image;
     
+    
 //font madness
     ofTrueTypeFont font;
  

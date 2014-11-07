@@ -114,7 +114,12 @@ void ofApp::draw(){
 //    ofSetColor(255,0,0);
 //    ofCircle(enemyX,enemyY,enemyRadius);
     
+    //creates Background Image of Bush
+    image.loadImage("bushBackgroundImage.jpg");
+    image.draw(0,0);
+    
     //creates eagle => player
+
     image.loadImage("eagle.png");
     image.draw(mouseX-100, mouseY-100);
 

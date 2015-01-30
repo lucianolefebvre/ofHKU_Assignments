@@ -19,7 +19,7 @@ void ofApp::setup(){
     hasLostGame = false;
     score = 0;
     ofSetVerticalSync(true);
-    enemySpeed = 5;
+    enemySpeed = 20;
       font.loadFont("SourceSansPro-Bold.ttf", 20);
  sound.loadSound("russiaSong.mp3");
     sound.play();
